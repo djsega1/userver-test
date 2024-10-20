@@ -2,10 +2,11 @@
 
 ```
 git clone --depth 1 https://github.com/djsega1/userver-test.git && \
-git clone --depth 1 https://github.com/userver-framework/userver.git third_party/userver && \
+git clone --depth 1 https://github.com/userver-framework/userver.git userver-test/third_party/userver && \
 cd userver-test
 
 docker compose up
+# для отключения - Ctrl-C + docker compose down
 ```
 
 ## Добавление доменов в /etc/hosts
