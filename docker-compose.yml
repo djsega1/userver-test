@@ -1,0 +1,31 @@
+services:
+  service_template-container:
+    image: ghcr.io/userver-framework/ubuntu-22.04-userver-pg:latest
+    privileged: true
+    environment:
+      - PREFIX=${PREFIX:-~/.local}
+      - CCACHE_DIR=/service_template/.ccache
+      - CORES_DIR=/cores
+    volumes:
+      - .:/service_template:rw
+    working_dir: /service_template
+    entrypoint:
+      - ./tests/run_as_user.sh
+    networks:
+      - new
+  nginx-container:
+    image: nginx:latest
+    environment:
+      TZ: "Europe/Moscow"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./nginx/static:/var/www/static
+    networks:
+      - new
+  
+networks:
+  new:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
